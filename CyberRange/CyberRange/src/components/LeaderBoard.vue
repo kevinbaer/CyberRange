@@ -23,6 +23,7 @@ export default {
   },
   created() {
     this.fetchLeaderboardData();
+    setInterval(this.fetchLeaderboardData, 10000);
   },
   computed: {
     sortedLeaderboardData() {
@@ -32,7 +33,7 @@ export default {
   methods: {
     async fetchLeaderboardData() {
       try {
-        const response = await axios.get('http://localhost:5000/update');
+        const response = await axios.get('https://leaderboarded.club/api/challenge_state');
         const data = response.data;
 
         // Counting occurrences of each college

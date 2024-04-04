@@ -6,7 +6,8 @@
     <div class="row">
       <div class="col-md-4 mb-4">
         <main>
-          <LeaderBoard />
+<!--          <LeaderBoard />-->
+          <ScoreLeaderboard />
         </main>
       </div>
       <div class="col-md-8 mb-4">
@@ -20,6 +21,7 @@
 
 <script setup>
   import LeaderBoard from './components/LeaderBoard.vue'
+  import ScoreLeaderboard from './components/ScoreLeaderboard.vue'
   import LeaderBoardHeader from './components/LeaderBoardHeader.vue'
   import Challenges from './components/Challenges.vue'
 </script>
