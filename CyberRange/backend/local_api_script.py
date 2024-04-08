@@ -2,6 +2,7 @@ import random
 from time import sleep
 import requests
 
+# TODO: Update this script
 challenges = ["Another Name", "Fusion", "Shell Shocked", "Snake Escape", "???"]
 teams = ["BSU", "CEI", "CSI", "CWI", "ISU", "ICSC", "NIC", "UI"]
 

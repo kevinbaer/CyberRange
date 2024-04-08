@@ -55,7 +55,8 @@ export default {
   methods: {
     async fetchMappingData() {
       try {
-        const response = await axios.get('https://leaderboarded.club/api/mapping');
+        // const response = await axios.get('https://leaderboarded.club/api/mapping');
+        const response = await axios.get('http://localhost:5000/api/mapping');
         this.mapping = response.data;
       } catch (error) {
         console.error('Error fetching mapping data:', error);
@@ -63,7 +64,8 @@ export default {
     },
     async fetchChallengesData() {
       try {
-        const response = await fetch('https://leaderboarded.club/api/challenge_state');
+        // const response = await fetch('https://leaderboarded.club/api/challenge_state');
+        const response = await fetch('http://localhost:5000/api/challenge_state');
         const data = await response.json();
         this.challenges = data;
       } catch (error) {

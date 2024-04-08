@@ -33,7 +33,8 @@ export default {
   methods: {
     async fetchLeaderboardData() {
       try {
-        const response = await axios.get('https://leaderboarded.club/api/challenge_state');
+        // const response = await axios.get('https://leaderboarded.club/api/challenge_state');
+        const response = await axios.get('http://localhost:5000/api/challenge_state');
         const data = response.data;
 
         // Counting occurrences of each college

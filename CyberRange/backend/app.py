@@ -1,48 +1,69 @@
-#python -m waitress --host=127.0.0.1 --port=5000 app:app
-
-
 import flask
-from flask import Flask, send_from_directory, jsonify, request
+from flask import Flask, send_from_directory
+from flask_httpauth import HTTPBasicAuth
 from waitress import serve
-import os
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-leaderboard_state = []
+auth = HTTPBasicAuth()
+state = {}
+users = {"testing": generate_password_hash("obi0r6Ljy4hdmZzZyX58EZS9jd0qRM8PyXLbAIpkoD8K1gaqqQNTvDbs1oncetNn"), }
 
-school_logo_mapping = {
-    "BSU": "bsu.jpg",
-    "CEI": "cei.png",
-    "CSI": "csi.png",
-    "CWI": "cwi.png",
-    "ISU": "isu.png",
-    "ICSC": "Icsc.png",
-    "NIC": "nic.png",
-    "UI": "ui.jpg"
-}
+mapping = {'Another Name': 'another_name', 'Fusion': 'cold_fusion', 'Snake Escape': 'snake_escape',
+           'Let me in!': 'let_me_in', 'Mysterious': 'mysterious', 'Cyber Cooking': 'cyber_cooking'}
+
+example_state = {
+    'challenges': {'Another Name': ['ISU'], 'Fusion': ['CWI', 'ISU'], 'Snake Escape': ['CWI'], 'Let me in!': ['CWI'],
+                   'Mysterious': ['CWI'], 'Cyber Cooking': []}, 'leaderboard': [(1, 'CWI', 3920), (2, 'ISU', 1010)]}
+
+state = example_state
+
+
+@auth.verify_password
+def verify_password(username, password):
+    if username in users and check_password_hash(users.get(username), password):
+        return username
+
 
 @app.route('/')
 def index():
-    return send_from_directory('..\\CyberRange\\dist', 'index.html')
+    # return send_from_directory('/var/www/leaderboard', 'index.html') # for prod
+    return send_from_directory('../CyberRange/dist', 'index.html')
 
+# Remove this for prod, since Nginx will be serving all the static files
 @app.route('/<path:path>')
 def serve_main_js(path):
     return send_from_directory('..\\CyberRange\\dist', path)
 
-@app.route('/update', methods=['POST', 'GET'])
-def update():
-    global leaderboard_state
-    if request.method == 'POST':
-        data = request.json
-        if data:
-            leaderboard_state = data
-            print("Data received:", leaderboard_state)
-            return jsonify({"message": "Leaderboard updated successfully."}), 200
-        else:
-            return jsonify({"error": "No data received."}), 400
-    elif request.method == 'GET':
-        return jsonify(leaderboard_state), 200
+
+@app.route('/update', methods=['POST'])
+@auth.login_required
+def write_update():
+    global state
+    print(f'Updating: {flask.request.data}')
+    state = flask.request.get_json()
+    return 'Request received', 200
+
+
+@app.route('/api/challenge_state', methods=['GET'])
+def read_challenge_state():
+    global state
+    return state['challenges'], 200
+
+
+@app.route('/api/mapping', methods=['GET'])
+def read_mapping():
+    global mapping
+    return mapping, 200
+
+
+@app.route('/api/leaderboard', methods=['GET'])
+def read_leaderboard():
+    global state
+    print(state)
+    return state['leaderboard'], 200
 
 
 if __name__ == '__main__':
     # app.run(debug=True)
-    serve(app, host='0.0.0.0', port=5000)
+    serve(app, host='127.0.0.1', port=5000)
