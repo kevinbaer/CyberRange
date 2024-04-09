@@ -2,7 +2,7 @@
   <div>
     <h1 class="mb-4">Leaderboard</h1>
     <ul class="list-group" v-if="leaderboardData.length">
-      <li class="list-group-item" v-for="(college, index) in sortedLeaderboardData" :key="index">
+      <li class="list-group-item" v-for="(college, index) in sortedLeaderboardData" :key="index" :class="{ 'striped-row': index % 2 === 0 }">
         <strong>{{ college.name }}</strong>: {{ college.count }} times
       </li>
     </ul>
@@ -61,3 +61,8 @@ export default {
 };
 </script>
 
+<style scoped>
+.striped-row {
+  background-color: #EDEDED; /* Apply striped background color */
+}
+</style>

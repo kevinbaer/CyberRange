@@ -1,10 +1,15 @@
 <template>
-  <h1 class="mb-4">Leaderboard</h1>
+  <div>
+    <h1 class="mb-4">Leaderboard</h1>
     <ul class="list-group" v-if="leaderboardData.length">
-    <li class=list-group-item v-for="(team, index) in leaderboardData" :key="index">
-      <strong>#{{ index + 1 }}</strong>: {{ team[1] }} - {{ team[2] }} points
-    </li>
-  </ul>
+      <li class="list-group-item" v-for="(team, index) in leaderboardData" :key="index" :class="{ 'striped-row': index % 2 === 0 }">
+        <strong>#{{ index + 1 }}</strong>: {{ team[1] }} - {{ team[2] }} points
+      </li>
+    </ul>
+    <div v-else>
+      <p class="text-muted">No data available.</p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -35,4 +40,7 @@ export default {
 </script>
 
 <style scoped>
+.striped-row {
+  background-color: #f0f0f0; /* Change to your desired background color */
+}
 </style>
