@@ -8,8 +8,8 @@
         <div class="card">
 
           <div class="challenge">
-            <img :src="`/assets/icons/challenges/${mapping[challenge]}.png`" alt="" class="card-img-top">
-            <img :src="`/assets/icons/school_logos/${challengeTeams[0]}.png`" alt="Top Team Logo" class="team-logo">
+            <img :src="`/assets/icons/challenges/${mapping[challenge]}.svg`" alt="" class="card-img-top">
+            <img :src="`/assets/icons/school_logos/${challengeTeams[0]}.svg`" alt="Top Team Logo" class="team-logo">
 <!--            <div class="university-stickers">-->
 <!--              <div v-for="(team, index) in challengeTeams" :key="index" class="sticker-container">-->
 <!--                <img :class="{'big-sticker': index === 0, 'small-sticker': index !== 0}"-->
