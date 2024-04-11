@@ -13,8 +13,8 @@ mapping = {'Another Name': 'another_name', 'Fusion': 'cold_fusion', 'Snake Escap
            'Let me in!': 'let_me_in', 'Mysterious': 'mysterious', 'Cyber Cooking': 'cyber_cooking'}
 
 example_state = {
-    'challenges': {'Another Name': ['ISU'], 'Fusion': ['CWI', 'ISU'], 'Snake Escape': ['CWI'], 'Let me in!': ['CWI'],
-                   'Mysterious': ['CWI'], 'Cyber Cooking': []}, 'leaderboard': [(1, 'CWI', 3920), (2, 'ISU', 1010)]}
+    'challenges': {'Another Name': ['ISU'], 'Fusion': ['ISU', 'CWI'], 'Snake Escape': ['CWI'], 'Let me in!': ['CWI'],
+                   'Mysterious': ['CWI'], 'Cyber Cooking': ['CWI']}, 'leaderboard': [(1, 'CWI', 3920), (2, 'ISU', 1010)]}
 
 state = example_state
 

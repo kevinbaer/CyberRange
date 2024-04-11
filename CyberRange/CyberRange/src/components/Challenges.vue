@@ -19,9 +19,17 @@
               <button class="btn dropdown-toggle w-100 dropdown-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 {{ challengeTeams.length > 0 ? challengeTeams[0] : 'No Winning Team' }}
               </button>
-              <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton">
-                <li v-for="(team, index) in challengeTeams" :key="index">
-                  <a class="dropdown-item" href="#">{{ team ? team : 'No Winning Team' }}</a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <!-- Display the top team first, then the rest of the teams -->
+                <li v-if="challengeTeams.length > 0" :key="0">
+                  <a class="dropdown-item" href="#">
+                    {{ '#' + 1 + ' ' + (challengeTeams[0] ? challengeTeams[0] : 'No Winning Team') }}
+                  </a>
+                </li>
+                <li v-for="(team, index) in challengeTeams.slice(1)" :key="index + 1">
+                  <a class="dropdown-item" href="#">
+                    {{ '#' + (index + 2) + ' ' + (team ? team : 'No Winning Team') }}
+                  </a>
                 </li>
               </ul>
             </div>
@@ -80,14 +88,15 @@ export default {
 
 .rounded-border {
   border: 2px solid #00BA31;
-
 }
+
 .dropdown-btn {
   color: white;
   border: 2px solid #00BA31;
   border-radius: 0px;
   background-color: #004F59;
 }
+
 .dropdown-btn:hover{
   background-color: white;
   color: black;
