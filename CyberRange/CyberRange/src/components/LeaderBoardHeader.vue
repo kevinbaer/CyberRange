@@ -4,24 +4,32 @@
       <!-- Logo -->
       <h1 class="logo">CyberRange</h1>
       <!-- Navigation -->
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link text-white" href="#" @click.prevent="navigateTo('leaderboard')">Leaderboard</a>
-          </li>
-        </ul>
-      </nav>
+      <!--<nav class="navbar navbar-expand-lg navbar-light">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+               Use router-link to navigate to the main page
+              <router-link to="/" class="nav-link text-white">Leaderboard</router-link>
+            </li> 
+          </ul>
+        </div>
+      </nav>-->
     </div>
   </header>
 </template>
 
 <script setup>
+import { defineProps } from 'vue';
+
 defineProps({
   msg: {
     type: String,
     required: true
   }
-})
+});
 </script>
 
 <style scoped>

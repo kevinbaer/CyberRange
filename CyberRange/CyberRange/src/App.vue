@@ -28,4 +28,16 @@ import Challenges from './components/Challenges.vue'
 </script>
 
 <style scoped>
+  /* Default styles for the main element */
+  main {
+    padding-bottom: 20px; /* Default padding */
+  }
+
+  /* Media query for small screens (max-width: 768px) */
+  @media only screen and (max-width: 768px) {
+    main {
+      padding-bottom: 40px; /* Adjust padding for small screens */
+      padding-top: 25px;
+    }
+  }
 </style>
