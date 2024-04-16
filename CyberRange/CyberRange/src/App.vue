@@ -1,7 +1,7 @@
 <template>
   <div>
     <header>
-      <LeaderBoardHeader />
+      <LeaderBoardHeader  msg="Cyber Range"/>
     </header>
     <div class="container mt-5">
       <div class="row">
@@ -21,7 +21,6 @@
 </template>
 
 <script setup>
-import LeaderBoard from './components/LeaderBoard.vue'
 import ScoreLeaderboard from './components/ScoreLeaderboard.vue'
 import LeaderBoardHeader from './components/LeaderBoardHeader.vue'
 import Challenges from './components/Challenges.vue'
