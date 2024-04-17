@@ -1,30 +1,37 @@
 <template>
-  <div>
-    <h2>Challenges</h2>
-  </div>
-  <div class="container mt-5">
+  <div class="container">
+    <div class="mb-4">
+      <h1>Challenges</h1>
+    </div>
     <div class="row">
       <div v-for="(challengeTeams, challenge) in challenges" :key="challenge" class="col-md-4 mb-4">
         <div class="card">
-
           <div class="challenge">
-            <img :src="`/assets/icons/challenges/${mapping[challenge]}.png`" alt="" class="card-img-top">
-            <img :src="`/assets/icons/school_logos/${challengeTeams[0]}.png`" alt="Top Team Logo" class="team-logo">
-<!--            <div class="university-stickers">-->
-<!--              <div v-for="(team, index) in challengeTeams" :key="index" class="sticker-container">-->
-<!--                <img :class="{'big-sticker': index === 0, 'small-sticker': index !== 0}"-->
-<!--                     :src="`/assets/icons/school_logos/${team}.png`" alt="">-->
-<!--              </div>-->
-<!--            </div>-->
+            <img :src="`/assets/icons/challenges/${mapping[challenge]}.svg`" alt="" class="card-img-top">
+            <!-- Only display team sticker if there's a winning team -->
+            <img v-if="challengeTeams.length > 0" :src="`/assets/icons/school_logos/${challengeTeams[0]}.svg`" alt="Top Team Logo" class="team-logo rounded-border">
           </div>
           <div class="card-body">
             <h5 class="card-title">{{ challenge }}</h5>
             <p>Winning Teams:</p>
+            <!-- Bootstrap dropdown -->
             <div class="dropdown">
-              <Dropdown variant="outline-danger">
-                <template #toggle> {{ challengeTeams[0]}}</template>
-                <a v-for="(team, index) in challengeTeams" :key="index" class="dropdown-item" href="#">{{ team }} </a>
-              </Dropdown>
+              <button class="btn dropdown-toggle w-100 dropdown-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ challengeTeams.length > 0 ? challengeTeams[0] : 'No Winning Team' }}
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <!-- Display the top team first, then the rest of the teams -->
+                <li v-if="challengeTeams.length > 0" :key="0">
+                  <a class="dropdown-item" href="#">
+                    {{ '#' + 1 + ' ' + (challengeTeams[0] ? challengeTeams[0] : 'No Winning Team') }}
+                  </a>
+                </li>
+                <li v-for="(team, index) in challengeTeams.slice(1)" :key="index + 1">
+                  <a class="dropdown-item" href="#">
+                    {{ '#' + (index + 2) + ' ' + (team ? team : 'No Winning Team') }}
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -35,12 +42,8 @@
 
 <script>
 import axios from "axios";
-import Dropdown from "@/components/Dropdown.vue";
 
 export default {
-  components: {
-    Dropdown,
-  },
   data() {
     return {
       challenges: [],
@@ -55,6 +58,7 @@ export default {
   methods: {
     async fetchMappingData() {
       try {
+        // const response = await axios.get('http://localhost:5000/api/mapping');
         const response = await axios.get('https://leaderboarded.club/api/mapping');
         this.mapping = response.data;
       } catch (error) {
@@ -64,6 +68,7 @@ export default {
     async fetchChallengesData() {
       try {
         const response = await fetch('https://leaderboarded.club/api/challenge_state');
+        // const response = await fetch('http://localhost:5000/api/challenge_state');
         const data = await response.json();
         this.challenges = data;
       } catch (error) {
@@ -83,33 +88,19 @@ export default {
   z-index: 1;
 }
 
-
-.university-stickers {
-  position: absolute;
-  top: 50%; /* shift the stickers up */
-  transform: translateY(-50%); /* center the stickers vertically */
-  width: 100%;
-  display: flex;
-  justify-content: center;
+.rounded-border {
+  border: 2px solid #00BA31;
 }
 
-.sticker-container {
-  transform: rotate(30deg); /* rotate the sticker container */
+.dropdown-btn {
+  color: white;
+  border: 2px solid #00BA31;
+  border-radius: 0px;
+  background-color: #004F59;
 }
 
-.big-sticker {
-  width: 60%;
-  border: 2px solid black;
-  opacity: 0; /* make the sticker initially invisible */
-  animation: slap-on 0.5s ease forwards; /* animate the sticker */
-  transform: scale(0); /* initially scale the sticker down */
+.dropdown-btn:hover{
+  background-color: white;
+  color: black;
 }
-
-@keyframes slap-on {
-  to {
-    opacity: 1; /* make the sticker fully visible at the end of the animation */
-    transform: scale(1); /* scale the sticker up to its original size */
-  }
-}
-
 </style>
